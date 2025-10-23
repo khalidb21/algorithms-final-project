@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 # Constants for configuring model
 DATASET_FILE = "PulseBat Dataset.csv" #path to PulseBat data
@@ -122,3 +123,40 @@ print(f"Mean Absolute Error (MAE): {mean_absolute_error_mergesort:.5f}")
 # TODO: Maybe add more metrics
 
 #TODO: Find best sorting method and use 
+
+# Battery Classification (Healthy vs Unhealthy)
+threshold = int(input("\n Enter a classification threshold for SOH (65-90): ")) / 100 # read and convert to decimal 
+
+# Classify batteries based on threshold
+y_class = (y_pred >= threshold).astype(int)  # 1 for healthy, 0 for unhealthy
+y_true_class = (y_test >= threshold).astype(int) # true health classifications
+
+# Calculate classification accuracy
+accuracy = accuracy_score(y_true_class, y_class)
+conf_matrix = confusion_matrix(y_true_class, y_class)
+class_report = classification_report(y_true_class, y_class)
+
+# Extract specific metrics from classification report
+recall_healthy = conf_matrix[1][1] / (conf_matrix[1][1] + conf_matrix[1][0])  # True Positive Rate for healthy
+recall_problem = conf_matrix[0][0] / (conf_matrix[0][0] + conf_matrix[0][1])  # True Positive Rate for unhealthy
+
+# Output classification results
+print("\nBATTERY CLASSIFICATION RESULTS\n")
+print(f"Classification Threshold (SOH): ", threshold*100, "%")
+print(f"Overall Accuracy: {accuracy:.3%}")
+
+# Summarized classification report
+print("\nClassification Statistics:")
+print(f"   Model had {recall_problem:.2%} accuracy in identifying UNHEALTHY batteries (SOH < {threshold})")
+print(f"   Model had {recall_healthy:.2%} accuracy in identifying HEALTHY batteries (SOH >= {threshold})")
+
+# Confusion matrix information
+print("\nConfusion Matrix Simplified:")
+print(f"Predicted Healthy | Found Healthy : {conf_matrix[1][1]}")
+print(f"Predicted Healthy | Found Unhealthy : {conf_matrix[0][1]}")
+print(f"Predicted Unhealthy | Found Healthy : {conf_matrix[1][0]}")
+print(f"Predicted Unhealthy | Found Unhealthy : {conf_matrix[0][0]}")
+
+
+
+
