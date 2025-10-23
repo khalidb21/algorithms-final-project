@@ -3,7 +3,7 @@
 **Current Phase: Train & Evaluate Linear Model**
 - Reads PulseBat data
 - Trains Model
-- Evaluates linear regression model based on standard metrics ()
+- Evaluates linear regression model based on standard metrics
 
 # How to setup and run code
 
