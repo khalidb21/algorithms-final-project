@@ -120,7 +120,6 @@ print(f"R² Score: {r2_mergesort:.5f}")
 print(f"Mean Squared Error (MSE): {mean_squared_error_mergesort:.5f}")
 print(f"Root Mean Squared Error (RMSE): {root_mean_squared_error_mergesort:.5f}")
 print(f"Mean Absolute Error (MAE): {mean_absolute_error_mergesort:.5f}")
-# TODO: Maybe add more metrics
 
 #TODO: Find best sorting method and use 
 
