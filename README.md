@@ -26,6 +26,11 @@ If SOH ≥ 0.6 → Healthy Battery
 
 `python main.py`
 
+## Install dependencies
+*pip install pandas numpy scikit-learn*
+
+After downloading dependencies, program is ready to be executed.
+
 ## Output Description:
 
 The program prints model training and evaluation results for predicting battery State of Health (SOH). 
@@ -34,11 +39,7 @@ It displays:
 - Model Evaluation Metrics — R², MSE, RMSE, and MAE for three models (Unsorted, MergeSorted, and SelectionSorted data).
 - Battery Classification Results — based on a user-defined SOH threshold, showing overall accuracy, classification statistics for healthy/unhealthy batteries, and a simplified confusion matrix.
 
-
 ## Create and activate *venv* in Windows or Git Bash
 *python -m venv .venv*  
 
 *source .venv/Scripts/activate*     
-
-## Install dependencies
-*pip install pandas numpy scikit-learn*
