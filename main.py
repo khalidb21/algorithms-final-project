@@ -80,7 +80,6 @@ def selectionSort2D(array_2d):
         selectionSort(b[r])
     return b
 
-
 load_pulsebat_data(DATASET_FILE)
 
 # Train Model
@@ -102,8 +101,6 @@ model = LinearRegression()
 model.fit(X_train, y_train)
 print("\nLinear Regression model trained successfully!")
 
-# TODO: preprocess with sorting (multiple sorting methods for data)
-
 
 # ---------  Train Model on MergeSorted Data ------------
 x_unsorted = pd.DataFrame(X).to_numpy() #convert dataframe to numpy array to work with
@@ -115,8 +112,19 @@ x_train_mergesort, x_test_mergesort, y_train_mergesort, y_test_mergesort = train
 model_mergesort = LinearRegression()
 model_mergesort.fit(x_train_mergesort, y_train_mergesort)
 
+# ---------  Train Model on SelectionSorted Data ------------
+X_sel = selectionSort2D(X.to_numpy())  # row-wise selection sort of features
+
+Xsel_train, Xsel_test, ysel_train, ysel_test = train_test_split(
+    X_sel, y.to_numpy(), test_size=TEST_SIZE, random_state=RANDOM_STATE
+)
+
+model_selection = LinearRegression()
+model_selection.fit(Xsel_train, ysel_train)
+
+y_pred_sel = model_selection.predict(Xsel_test)
+
 # Evaluate Model
-# TODO: Compare sorting methods
 y_pred = model.predict(X_test)
 r2_unsorted = r2_score(y_test, y_pred)
 mean_squared_error_unsorted = mean_squared_error(y_test, y_pred)
@@ -142,7 +150,20 @@ print(f"Mean Squared Error (MSE): {mean_squared_error_mergesort:.5f}")
 print(f"Root Mean Squared Error (RMSE): {root_mean_squared_error_mergesort:.5f}")
 print(f"Mean Absolute Error (MAE): {mean_absolute_error_mergesort:.5f}")
 
-#TODO: Find best sorting method and use 
+print("\nSELECTIONSORT MODEL EVALUATION RESULTS")
+
+#Selection Sort Model Evaluation
+#calculates the results for the R^2, MSE, root, MSE, and MAE
+r2_sel = r2_score(ysel_test, y_pred_sel)
+mse_sel = mean_squared_error(ysel_test, y_pred_sel)
+rmse_sel = np.sqrt(mse_sel)
+mae_sel = mean_absolute_error(ysel_test, y_pred_sel)
+
+#prints the results for the R^2, MSE, root, MSE, and MAE
+print(f"R² Score: {r2_sel:.5f}")
+print(f"Mean Squared Error (MSE): {mse_sel:.5f}")
+print(f"Root Mean Squared Error (RMSE): {rmse_sel:.5f}")
+print(f"Mean Absolute Error (MAE): {mae_sel:.5f}")
 
 
 # Battery Classification (Healthy vs Unhealthy)
@@ -178,31 +199,3 @@ print(f"Predicted Healthy | Found Unhealthy : {conf_matrix[0][1]}")
 print(f"Predicted Unhealthy | Found Healthy : {conf_matrix[1][0]}")
 print(f"Predicted Unhealthy | Found Unhealthy : {conf_matrix[0][0]}")
 
-
-
-# ---------  Train Model on SelectionSorted Data ------------
-X_sel = selectionSort2D(X.to_numpy())  # row-wise selection sort of features
-
-Xsel_train, Xsel_test, ysel_train, ysel_test = train_test_split(
-    X_sel, y.to_numpy(), test_size=TEST_SIZE, random_state=RANDOM_STATE
-)
-
-model_selection = LinearRegression()
-model_selection.fit(Xsel_train, ysel_train)
-
-y_pred_sel = model_selection.predict(Xsel_test)
-
-print("\nSELECTIONSORT MODEL EVALUATION RESULTS")
-
-#Selection Sort Model Evaluation
-#calculates the results for the R^2, MSE, root, MSE, and MAE
-r2_sel = r2_score(ysel_test, y_pred_sel)
-mse_sel = mean_squared_error(ysel_test, y_pred_sel)
-rmse_sel = np.sqrt(mse_sel)
-mae_sel = mean_absolute_error(ysel_test, y_pred_sel)
-
-#prints the results for the R^2, MSE, root, MSE, and MAE
-print(f"R² Score: {r2_sel:.5f}")
-print(f"Mean Squared Error (MSE): {mse_sel:.5f}")
-print(f"Root Mean Squared Error (RMSE): {rmse_sel:.5f}")
-print(f"Mean Absolute Error (MAE): {mae_sel:.5f}")
