@@ -1,5 +1,12 @@
 .venv/
+
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
 .DS_Store
 PulseBat Dataset.csv
+
+.vscode/
+.idea/
