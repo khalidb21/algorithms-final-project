@@ -9,7 +9,6 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 DATASET_FILE = "PulseBat Dataset.csv" #path to PulseBat data
 TEST_SIZE = 0.25 # reserve portion of data for testing
 RANDOM_STATE = 15 # seed for random shuffle: make train/test split the same every run
-NUMBER_OF_BATTERIES = 671
 
 # Retrieve PulseBat data from file
 def load_pulsebat_data(file_path):
@@ -59,7 +58,7 @@ def mergeSort(array):
 def mergeSort2D(array):
     array_copy = array.copy() #create a copy so original data is not changed
 
-    for x in range(0, NUMBER_OF_BATTERIES - 1): #loop through all batteries
+    for x in range(len(array_copy)): #loop through all batteries
         mergeSort(array_copy[x])
     return array_copy
 
@@ -198,4 +197,3 @@ print(f"Predicted Healthy | Found Healthy : {conf_matrix[1][1]}")
 print(f"Predicted Healthy | Found Unhealthy : {conf_matrix[0][1]}")
 print(f"Predicted Unhealthy | Found Healthy : {conf_matrix[1][0]}")
 print(f"Predicted Unhealthy | Found Unhealthy : {conf_matrix[0][0]}")
-
