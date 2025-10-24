@@ -19,7 +19,6 @@ If SOH ≥ 0.6 → Healthy Battery
 
 # How to setup and run code
 
-
 **in Git Bash**  
 *git clone https://github.com/khalidb21/algorithms-final-project.git*  
 
@@ -27,7 +26,7 @@ If SOH ≥ 0.6 → Healthy Battery
 
 `python main.py`
 
-**Output Description:**
+## Output Description:
 
 The program prints model training and evaluation results for predicting battery State of Health (SOH). 
 
@@ -35,13 +34,11 @@ It displays:
 - Model Evaluation Metrics — R², MSE, RMSE, and MAE for three models (Unsorted, MergeSorted, and SelectionSorted data).
 - Battery Classification Results — based on a user-defined SOH threshold, showing overall accuracy, classification statistics for healthy/unhealthy batteries, and a simplified confusion matrix.
 
-# Create and activate *venv* in Windows or Git Bash
+
+## Create and activate *venv* in Windows or Git Bash
 *python -m venv .venv*  
 
 *source .venv/Scripts/activate*     
 
-# Install dependencies
+## Install dependencies
 *pip install pandas numpy scikit-learn*
-
-# Run Code in Git Bash
-*python main.py*
