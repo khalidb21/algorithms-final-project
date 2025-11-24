@@ -6,7 +6,6 @@ __pycache__/
 *.pyd
 
 .DS_Store
-PulseBat Dataset.csv
 
 .vscode/
 .idea/
