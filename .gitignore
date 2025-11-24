@@ -10,3 +10,6 @@ PulseBat Dataset.csv
 
 .vscode/
 .idea/
+
+*.png
+

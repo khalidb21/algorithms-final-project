@@ -8,8 +8,6 @@ If SOH < 0.6 → Unhealthy Battery
 
 If SOH ≥ 0.6 → Healthy Battery
 
-
-
 **Current Phase: Train & Evaluate Linear Model**
 - Reads PulseBat data
 - Trains Model
@@ -27,7 +25,17 @@ If SOH ≥ 0.6 → Healthy Battery
 `python main.py`
 
 ## Install dependencies
-*pip install pandas numpy scikit-learn*
+
+`python -m venv .venv`
+
+activate virtual env (windows)
+`.venv\Scripts\activate`
+
+activate virtual env (linux)
+
+`source .venv/bin/activate`
+
+`pip install -r requirements.txt`
 
 After downloading dependencies, program is ready to be executed.
 
