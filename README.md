@@ -26,15 +26,16 @@ If SOH ≥ 0.6 → Healthy Battery
 
 ## Install dependencies
 
+create virtual env
 `python -m venv .venv`
 
 activate virtual env (windows)
 `.venv\Scripts\activate`
 
 activate virtual env (linux)
-
 `source .venv/bin/activate`
 
+install python dependencies
 `pip install -r requirements.txt`
 
 After downloading dependencies, program is ready to be executed.
@@ -47,7 +48,4 @@ It displays:
 - Model Evaluation Metrics — R², MSE, RMSE, and MAE for three models (Unsorted, MergeSorted, and SelectionSorted data).
 - Battery Classification Results — based on a user-defined SOH threshold, showing overall accuracy, classification statistics for healthy/unhealthy batteries, and a simplified confusion matrix.
 
-## Create and activate *venv* in Windows or Git Bash
-*python -m venv .venv*  
 
-*source .venv/Scripts/activate*     
