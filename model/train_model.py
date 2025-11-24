@@ -5,100 +5,43 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-# Constants for configuring model
-DATASET_FILE = "PulseBat Dataset.csv" #path to PulseBat data
+# CONSTANTS
+DATASET_FILEPATH = "PulseBat Dataset.csv"
 TEST_SIZE = 0.25 # reserve portion of data for testing
 RANDOM_STATE = 15 # seed for random shuffle: make train/test split the same every run
 
 # Retrieve PulseBat data from file
 def load_pulsebat_data(file_path):
-    global df
-    df = pd.read_csv(file_path)
-    print(f"Dataset loaded: {df.shape} samples, {df.shape[1]} columns")
-    # TODO: exceptions for any errors 
-
-# Merge sort 
-def mergeSort(array):
-    if len(array) > 1: 
-        left = []
-        right = []
-        mid = len(array) // 2
-
-        for x in range(0, mid):
-            left.append(array[x])
-        for x in range(mid + 1, len(array)):
-            right.append(array[x])
-       
-        mergeSort(left)
-        mergeSort(right)
-
-        i = 0
-        j = 0
-        k = 0
- 
-        while i < len(left) and j < len(right):
-            if left[i] < right[j]:
-                array[k] = left[i]                
-                i += 1
-            else:
-                array[k] = right[j]
-                j += 1
-            k += 1
-     
-        while i < len(left):
-            array[k] = left[i]
-            i += 1
-            k += 1
- 
-        while j < len(right):
-            array[k] = right[j]
-            j += 1
-            k += 1
-
-def mergeSort2D(array):
-    array_copy = array.copy() #create a copy so original data is not changed
-
-    for x in range(len(array_copy)): #loop through all batteries
-        mergeSort(array_copy[x])
-    return array_copy
-
-# Selection Sort
-def selectionSort(row):
-    n = len(row)
-    for i in range(n - 1):
-        min = i
-        for j in range(i + 1, n):
-            if row[j] < row[min]:
-                min = j
-        if min != i:
-            row[i], row[min] = row[min], row[i]
-
-def selectionSort2D(array_2d):
-    b = array_2d.copy()         
-    for r in range(len(b)):     
-        selectionSort(b[r])
-    return b
-
-load_pulsebat_data(DATASET_FILE)
+    try:
+        df = pd.read_csv(file_path)
+        print(f"Dataset loaded: {df.shape} samples, {df.shape[1]} columns")
+        return df 
+    except FileNotFoundError:
+        print(f"ERROR: File '{file_path}' not found!")
+        return None
+    except Exception as e:
+        print(f"ERROR loading data: {e}")
+        return None
 
 # Train Model
 # Based on voltages from U1-21, predict SOH (state of health) 
+def train_linear_regression():
 
-# names of columns 
-voltage_cols = [f'U{i}' for i in range(1, 22)]
-# voltage values for each row
-X = df[voltage_cols]
-# state of health value for each row
-y = df['SOH']
+    # names of columns 
+    voltage_cols = [f'U{i}' for i in range(1, 22)]
+    # voltage values for each row
+    X = df[voltage_cols]
+    # state of health value for each row
+    y = df['SOH']
 
-# split model into test and training data
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
-)
+    # split model into test and training data
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    )
 
-model = LinearRegression()
-model.fit(X_train, y_train)
-print("\nLinear Regression model trained successfully!")
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    print("\nLinear Regression model trained successfully!")
 
 
 # ---------  Train Model on MergeSorted Data ------------
@@ -197,3 +140,8 @@ print(f"Predicted Healthy | Found Healthy : {conf_matrix[1][1]}")
 print(f"Predicted Healthy | Found Unhealthy : {conf_matrix[0][1]}")
 print(f"Predicted Unhealthy | Found Healthy : {conf_matrix[1][0]}")
 print(f"Predicted Unhealthy | Found Unhealthy : {conf_matrix[0][0]}")
+
+print(f"{"="*10}")
+
+if __name__ == "__main__":
+    load_pulsebat_data(DATASET_FILEPATH)
