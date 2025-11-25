@@ -36,8 +36,8 @@ def evaluate_model(model, X_test, y_test):
     print(f"Root Mean Squared Error (RMSE): {rmse:.5f}")
     print(f"Mean Absolute Error (MAE): {mae:.5f}")
 
+    # Return mean square root
     return mse
-
 
 if __name__ == "__main__":
     main()

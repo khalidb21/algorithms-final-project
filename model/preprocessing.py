@@ -1,7 +1,4 @@
 import copy
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 
 from config import *
 from model_utils import train_linear_regression, load_pulsebat_data
