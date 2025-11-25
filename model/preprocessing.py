@@ -15,7 +15,6 @@ def main():
 
     # Run comparison of sorting strategies
     best_method = compare_sorting_methods(X, y)
-
     print(f"\nBEST METHOD SELECTED: {best_method.upper()}")
     print("This method will be used for the trained model.\n")
 

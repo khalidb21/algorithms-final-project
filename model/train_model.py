@@ -20,8 +20,8 @@ def main():
     voltage_cols = [f'U{i}' for i in range(1, 22)]      # Create a list of columns U1-U21
     X = df[voltage_cols].to_numpy()                     # voltage values for each row
     y = df['SOH']                                       # state of health value for each row
+    X_merge = mergeSort2D(X)                            # perform merge sort preprocessing
 
-    X_merge = mergeSort2D(X)
     # Train and output saved model
     model, _, _ = train_linear_regression(X_merge, y)
     joblib.dump(model, MODEL_OUTPUT_PATH)
