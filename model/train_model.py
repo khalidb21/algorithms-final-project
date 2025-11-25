@@ -1,6 +1,8 @@
 import joblib
 
 from model_utils import train_linear_regression, load_pulsebat_data
+from preprocessing import mergeSort2D
+
 # CONSTANTS
 DATASET_FILEPATH = "../data/PulseBat Dataset.csv"
 MODEL_OUTPUT_PATH = "../app/lr_model.pk1"
@@ -16,11 +18,12 @@ def main():
         return
     
     voltage_cols = [f'U{i}' for i in range(1, 22)]      # Create a list of columns U1-U21
-    X = df[voltage_cols]                                # voltage values for each row
+    X = df[voltage_cols].to_numpy()                     # voltage values for each row
     y = df['SOH']                                       # state of health value for each row
 
+    X_merge = mergeSort2D(X)
     # Train and output saved model
-    model, _, _ = train_linear_regression(X, y)
+    model, _, _ = train_linear_regression(X_merge, y)
     joblib.dump(model, MODEL_OUTPUT_PATH)
     print(f"Trained model saved to {MODEL_OUTPUT_PATH}")
 
