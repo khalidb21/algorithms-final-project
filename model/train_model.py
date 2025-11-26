@@ -2,12 +2,7 @@ import joblib
 
 from model_utils import train_linear_regression, load_pulsebat_data
 from preprocessing import mergeSort2D
-
-# CONSTANTS
-DATASET_FILEPATH = "../data/PulseBat Dataset.csv"
-MODEL_OUTPUT_PATH = "../app/lr_model.pk1"
-TEST_SIZE = 0.25 # reserve portion of data for testing
-RANDOM_STATE = 15 # seed for random shuffle: make train/test split the same every run
+from config import *
 
 # Train and save model into a .pk1 file for chatbot use
 def main():
