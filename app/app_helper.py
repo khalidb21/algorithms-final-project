@@ -42,8 +42,8 @@ def predict_soh(model, voltage_samples):
         # Create a df for model input
         input_columns = [f'U{i}' for i in range(1, 22)]
         input_voltages = pd.DataFrame([[voltage_samples.get(f'U{i}') for i in range(1, 22)]], columns=input_columns)
-        soh = model.predict(input_voltages)[0]
-        return np.clip(soh, 0.0, 1.0)       # Keep SOH range between 0-1
+        soh = model.predict(input_voltages)[0]      # Predict SOH using the model
+        return np.clip(soh, 0.0, 1.0)               # Keep SOH range between 0-1
     
     # If model fails to create a prediction
     except Exception as e:

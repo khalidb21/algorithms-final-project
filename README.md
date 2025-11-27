@@ -1,113 +1,186 @@
-# Description
+# Battery Pack SOH Prediction
 
-**Algorithms Final Project — PulseBat SOH Prediction** 
+A machine learning application that predicts battery State of Health (SOH) using linear regression. This project combines predictive modeling with a conversational chatbot interface to provide battery health insights.
 
-This repo predicts the *battery State of Health (SOH)* from PulseBat voltage features `U1...U21` using a simple linear regression model and row-wise sorting experiments with *Merge Sort* and *Selection Sort*. We will also design a simple chatbot model that will transmit the batter's health status (SOH) and answer some simple bettery related questions by linking our chatbot to a Chatbot API.
+## Overview
 
-If SOH < 0.6 → Unhealthy Battery   
+This project analyzes PulseBat voltage features (U1–U21) to predict the overall State of Health of a battery pack. The application classifies battery health as either "Healthy" or "Unhealthy" based on the predicted SOH value:
 
-If SOH ≥ 0.6 → Healthy Battery
+- **SOH ≥ Threshold**: Healthy Battery
+- **SOH < Threshold**: Unhealthy Battery
 
-# How to setup and run code
+The project also implements sorting algorithms (Merge Sort and Selection Sort) for data processing and integrates a chatbot powered by the Gemini API to answer battery-related questions and communicate health status.
 
-**in Git Bash**  
-*git clone https://github.com/khalidb21/algorithms-final-project.git*  
+## Dataset Description
 
-*cd algorithms-final-project*
+The linear regression model is based on the PulseBat dataset, which contains pulse-response measurements and SOH values for individual lithium-ion battery cells. A full battery pack includes 21 cells, labelled U1 through U21, and an associated SOH value for the battery. The SOH value represents how much usable capacity the cell still has compared to when it was new (ranging from 0-1 where 1 is brand new and 0 is completely degraded). 
 
-*`python main.py`*
+## Features
 
-## Install dependencies
+- **Predictive Modeling**: Linear regression model trained on PulseBat voltage features
+- **Algorithm Implementation**: Merge Sort and Selection Sort for comparing preprocessing sorts and their effects on the accuracy of the linear regression
+- **Chatbot Integration**: AI-powered chatbot using Google Gemini API for user interaction
+- **Web Interface**: Interactive Streamlit app for easy visualization and prediction
+- **Performance Metrics**: Comprehensive evaluation with R² Score, MSE, MAE, and RMSE
 
-### Step 1
-
-Create the Virtual Environment
-*`python -m venv .venv`*
-
-### Step 2
-
-Activate a Virtual Environment for Windows:  
-*`.venv\Scripts\activate`*
-
-Activate a Virtual Environment for Linux:  
-*`source .venv/bin/activate`*
-
-Install Python Dependencies:  
-*`pip install -r requirements.txt`*
-
-### Step 3
-
-Make sure to get Free Gemini API Key and create a *.env* file in the root that follows the *.env.example*   
-
-Go to <ins>Google AI Studio</ins> and signin to your Google account, then click *'Get API Key'* and then *'Create API Key'* for you prokect.  
-https://aistudio.google.com/api-keys
-
-After downloading dependencies, program is ready to be executed.
-
-## Run program
-
-### Step 1
-
-Run the training model 
-
-**from root folder:**
+## Project Structure
 
 ```
-*cd model*
-*python train_model.py*
+algorithms-final-project/
+├── main.py                      # Main execution script
+├── sorting.py                   # Sorting algorithms (Merge Sort, Selection Sort)
+├── regression.py                # Linear regression helper functions
+├── PulseBat Dataset.csv         # Training dataset with voltage features
+├── model/
+│   ├── config.py                # Constants used across the project (paths, filenames, settings)
+│   ├── model_utils.py           # Shared utilities for loading, saving, and preparing models
+│   ├── evaluate_performance.py  # Functions for evaluating regression performance (MSE, MAE, R²)
+│   ├── preprocessing.py         # Data preprocessing steps such as mergeSort2D and feature preparation
+│   └── train_model.py           # Model training script that generates and exports the .pk1 model
+├── app/
+│   ├── app_helper.py            # Helper functions for Streamlit: input parsing, prediction logic, model loading
+│   └── app.py                   # Streamlit web application (UI + chatbot + prediction interface)
+├── requirements.txt             # Python dependencies
+├── .env.example                 # Environment variable template (e.g., GEMINI_API_KEY)
+└── README.md                    # This file
 ```
 
-### Step 2
+## Prerequisites
 
-**from root folder:**
+- Python 3.7 or higher
+- pip (Python package manager)
+- Google Gemini API Key (free tier available)
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/khalidb21/algorithms-final-project.git
+cd algorithms-final-project
+```
+
+### 2. Create Virtual Environment
+
+**For Windows:**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**For Linux/macOS:**
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Setup Gemini API Key
+
+1. Visit [Google AI Studio](https://aistudio.google.com/api-keys)
+2. Sign in with your Google account
+3. Click **"Get API Key"** and then **"Create API Key"**
+4. Create a `.env` file in the root directory (copy from `.env.example`):
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
+## Usage
+
+### Train Model
+
+```bash
+cd model
+python train_model.py
+cd ..
+```
+
+### Run Web Application
+
+```bash
+cd app
+streamlit run app.py
+```
+
+This launches an interactive web interface at `http://localhost:8501` where you can:
+- Enter your battery pack voltage samples
+- View SOH predictions and get insights powered by AI
+- Chat with the AI chatbot for battery-related questions
+
+## Model Performance
+
+The linear regression model is evaluated using standard metrics:
+
+- **R² Score**: Coefficient of determination (0-1 scale)
+- **Mean Squared Error (MSE)**: Average squared prediction errors
+- **Mean Absolute Error (MAE)**: Average absolute prediction errors
+- **Root Mean Squared Error (RMSE)**: Standard deviation of prediction errors
 
 ```
-*cd app*
-*streamlit run app.py*
+MODEL EVALUATION RESULTS
+R² Score: 0.54909
+Mean Squared Error (MSE): 0.00260
+Root Mean Squared Error (RMSE): 0.05098
+Mean Absolute Error (MAE): 0.04064
 ```
 
-## What You’ll See After Running the Program
+## Algorithms
 
-When you run *`main.py`*, the program prints each stage of the process in the console. The output usually follows this order:
+### Sorting Algorithms
 
----
-### **1. Dataset Preprocessing**
-You will see messages confirming that the dataset was loaded correctly, along with:
-- The extracted SOH values for cells U1–U21  
-- Sorted versions of the values (depending on which sorting method is running)  
-- Any notes or updates printed during preprocessing  
----
-### **2. Model Training**
-The console will show messages such as:
-- When training begins  
-- When the model finishes training  
-- Any details or logs printed by scikit-learn during the process  
----
-### **3. Evaluation Metrics**
-After training, the program prints several metrics that show how the model performed:
-- *R² Score*  
-- *Mean Squared Error (MSE)*  
-- *Mean Absolute Error (MAE)* 
-- *Root Mean Squared Error (RMSE)*  
-These numbers give an idea of how close the predictions are to the actual SOH values.
----
-### **4. Final SOH Prediction**
+The project implements two sorting algorithms for data preprocessing:
 
-Example output line: *Predicted SOH: 0.71*  
-This represents the model’s estimate of the battery pack’s health.
+- **Merge Sort**: O(n log n) time complexity, stable sorting
+- **Selection Sort**: O(n²) time complexity, in-place sorting
 
----
-### **5. Battery Health Classification**
-Based on the required threshold rule (`0.6`): *Battery Status: Healthy* or *Battery Status Problem Detected*  
+Both are applied to rows of the dataset for comparative performance analysis to the unsorted data used in the web application.
 
----  
+### Linear Regression
 
-## Repository Structure
-algorithms-final-project/  
-│── main.py            &emsp;    *# Main script: preprocessing → sorting → regression → evaluation*  
-│── sorting.py         &emsp;    *# Sorting functions (may include selection & merge sort)*  
-│── regression.py      &emsp;     *# Helper functions for regression*  
-│── PulseBat Dataset.csv &emsp;   *# PulseBat dataset used by the program*  
-│── README.md            &emsp;  *# Documentation file*  
-│── .gitignore   
+A scikit-learn linear regression model maps the 21-dimensional voltage feature space to a single SOH prediction.
+
+## API Integration
+
+The project integrates with the **Google Gemini API** to power a conversational chatbot that:
+- Answers battery-related questions
+- Explains SOH predictions
+- Provides maintenance recommendations
+- Communicates health status
+
+## Troubleshooting
+
+**Issue**: Import errors or missing modules
+- **Solution**: Ensure virtual environment is activated and run `pip install -r requirements.txt`
+
+**Issue**: Gemini API Key not recognized
+- **Solution**: Verify `.env` file exists in the root directory with correct API key format
+
+**Issue**: Dataset file not found
+- **Solution**: Ensure `PulseBat Dataset.csv` is in the project root directory
+
+**Issue**: Streamlit app won't start
+- **Solution**: Make sure you're in the `app/` directory when running `streamlit run app.py`
+
+## Future Enhancements
+
+- Advanced ML models
+- Batch prediction functionality
+- Export prediction reports to PDF
+- Multi-language chatbot support
+
+## Dependencies
+
+See `requirements.txt` for complete list. Key packages:
+- scikit-learn: Machine learning
+- numpy: Math and data handling
+- pandas: Data manipulation
+- streamlit: Web interface
+- python-dotenv: Environment variable management
+- google-generativeai: Gemini API integration
+
 
