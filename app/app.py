@@ -270,7 +270,7 @@ st.divider()
 st.markdown("""
     <div style='text-align: center; color: gray; font-size: 0.9rem;'>
     <p>
-    Battery SOH Prediction with Chatbot Integration
+    Battery SOH Prediction using Linear Regression & Chatbot Integration
     <br>
     Built with Streamlit, Scikit-learn, and Google Gemini API
     <br>
