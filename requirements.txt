@@ -4,4 +4,3 @@ scikit-learn
 google-genai
 streamlit
 python-dotenv
-# matplotlib
