@@ -138,7 +138,7 @@ with tab1:
             st.metric("Status", "Ready")
         
         # Prediction button
-        if st.button("🚀 Predict Battery Health", use_container_width=True, type="primary"):
+        if st.button("🚀 Predict Battery Health", width='stretch', type="primary"):
             cell_values = parse_cell_input(cell_input)
             
             if cell_values:
@@ -197,7 +197,7 @@ with tab1:
                             'Cell': list(cell_values.keys()),
                             'Voltage': list(cell_values.values())
                         })
-                        st.dataframe(cell_df, use_container_width=True, hide_index=True)
+                        st.dataframe(cell_df, width='stretch', hide_index=True)
 
 # Tab 2: Chatbot
 with tab2:
@@ -248,7 +248,7 @@ with tab2:
             st.write(bot_reply)
     
     # Clear chat button
-    if st.button("🗑️ Clear Chat History", use_container_width=True):
+    if st.button("🗑️ Clear Chat History", width='stretch'):
         st.session_state.messages = []
         st.rerun()
 
