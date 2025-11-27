@@ -15,25 +15,25 @@ If SOH ≥ 0.6 → Healthy Battery
 
 *cd algorithms-final-project*
 
-`python main.py`
+*`python main.py`*
 
 ## Install dependencies
 
 ### Step 1
 
-create virtual env
-`python -m venv .venv`
+Create the Virtual Environment
+*`python -m venv .venv`*
 
 ### Step 2
 
-activate virtual env (windows)
-`.venv\Scripts\activate`
+Activate a Virtual Environment for Windows:  
+*`.venv\Scripts\activate`*
 
-activate virtual env (linux)
-`source .venv/bin/activate`
+Activate a Virtual Environment for Linux:  
+*`source .venv/bin/activate`*
 
-install python dependencies
-`pip install -r requirements.txt`
+Install Python Dependencies:  
+*`pip install -r requirements.txt`*
 
 ### Step 3
 
@@ -53,8 +53,8 @@ Run the training model
 **from root folder:**
 
 ```
-cd model
-python train_model.py
+*cd model*
+*python train_model.py*
 ```
 
 ### Step 2
@@ -62,13 +62,13 @@ python train_model.py
 **from root folder:**
 
 ```
-cd app
-streamlit run app.py
+*cd app*
+*streamlit run app.py*
 ```
 
 ## What You’ll See After Running the Program
 
-When you run `main.py`, the program prints each stage of the process in the console. The output usually follows this order:
+When you run *`main.py`*, the program prints each stage of the process in the console. The output usually follows this order:
 
 ---
 ### **1. Dataset Preprocessing**
