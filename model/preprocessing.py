@@ -10,7 +10,7 @@ def main():
         return
     
     voltage_cols = [f"U{i}" for i in range(1, 22)]
-    X = df[voltage_cols].to_numpy()
+    X = df[voltage_cols].to_numpy()                  # Convert columns to numpy arrays for processing, as sorting functions expect numpy arrays
     y = df["SOH"]
 
     # Run comparison of sorting strategies

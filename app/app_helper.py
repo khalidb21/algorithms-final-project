@@ -1,5 +1,6 @@
 import joblib
 import streamlit as st
+import pandas as pd
 import numpy as np
 
 # Load model from pk1 file
@@ -38,8 +39,9 @@ def predict_soh(model, voltage_samples):
     #     Predicted SOH value
 
     try:
-        # Create array for U1-U21
-        input_voltages = np.array([[voltage_samples.get(f'U{i}') for i in range(1, 22)]])
+        # Create a df for model input
+        input_columns = [f'U{i}' for i in range(1, 22)]
+        input_voltages = pd.DataFrame([[voltage_samples.get(f'U{i}') for i in range(1, 22)]], columns=input_columns)
         soh = model.predict(input_voltages)[0]
         return np.clip(soh, 0.0, 1.0)       # Keep SOH range between 0-1
     
