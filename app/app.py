@@ -25,6 +25,7 @@ st.set_page_config(
 st.title("Battery SOH Predictor & Chatbot")
 
 # CSS styling for SOH Classifications
+# Used on predict tab
 st.markdown("""
     <style>
     .healthy {
@@ -53,6 +54,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Initialize session
+# Everytime user interacts with app, the app is rerun
+# Session state is a special dictionary that keeps values across rerun
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "model" not in st.session_state:
@@ -60,9 +63,10 @@ if "model" not in st.session_state:
 if "threshold" not in st.session_state:
     st.session_state.threshold = 0.6
 
-# Function for chatbot battery queries
+# Get AI insights for SOH predictions
 def get_battery_insights(soh, status, threshold):
-    """Get Gemini insights about battery health"""
+
+    # Prompt used for AI insights
     prompt = f"""
     A battery has the following State of Health (SOH) metrics:
     - Predicted SOH: {soh:.4f}
@@ -78,14 +82,17 @@ def get_battery_insights(soh, status, threshold):
             contents=prompt
         )
         return response.text
+    
+    # Failed to generate response
     except Exception as e:
         return f"Could not generate insights: {e}"
-
 
 # Sidebar used for threshold
 with st.sidebar:
     st.header("⚙️ Configuration")
     
+    # Use slider to change threshold
+    # Limit the user to changing threshold between 0.5 and 1 (inclusive)
     st.session_state.threshold = st.slider(
         "SOH Threshold for Classification",
         min_value=0.5,
@@ -95,13 +102,14 @@ with st.sidebar:
         help="Battery is 'Healthy' if SOH ≥ threshold"
     )
     
+    # Threshold configuration info
     st.info(f"""
     📊 **Current Threshold: {st.session_state.threshold:.2f}**
     - ✅ Healthy: SOH ≥ {st.session_state.threshold:.2f}
     - ❌ Unhealthy: SOH < {st.session_state.threshold:.2f}
     """)
     
-    # Model Loading
+    # Store model in session state
     st.session_state.model = load_model(model_path)
     if st.session_state.model:
         st.success("Model loaded successfully!")
@@ -121,29 +129,31 @@ with tab1:
     else:
         col1, col2 = st.columns([2, 1])
         
+        # User input for voltage measurements
         with col1:
-            st.subheader("Enter Cell Voltage Values")
-            st.write("**Format Option 1:** `U1:0.85 U2:0.87 U3:0.84 ...` (space-separated with cell names)")
-            st.write("**Format Option 2:** `0.85 0.87 0.84 ...` (21 comma or space-separated values)")
+            st.subheader("Enter Voltage Samples for Timestamps U1-21")
+            st.write("**Format:** `3.85 3.87 3.84 ...` (comma or space-separated values)")
             
-            cell_input = st.text_area(
-                "Cell Values",
+            # Text area for input with a sample provided
+            voltage_input = st.text_area(
+                "Voltage Measurements",
                 value="3.4867,3.5053,3.5311,3.5128,3.4889,3.4688,3.4402,3.4607,3.4858,3.5255,3.5704,3.5301,3.4905,3.4564,3.3903,3.4281,3.4849,3.5503,3.6402,3.568,3.4939",
-                height=100,
+                height="content",
                 label_visibility="collapsed"
             )
         
+        # Display threshold and status for running prediction
         with col2:
             st.metric("Threshold", f"{st.session_state.threshold:.2f}")
             st.metric("Status", "Ready")
         
         # Prediction button
         if st.button("🚀 Predict Battery Health", width='stretch', type="primary"):
-            cell_values = parse_cell_input(cell_input)
+            voltage_measurements = parse_voltage_input(voltage_input)
             
-            if cell_values:
+            if voltage_measurements:
                 # Make prediction
-                soh = predict_soh(st.session_state.model, cell_values)
+                soh = predict_soh(st.session_state.model, voltage_measurements)
                 
                 if soh is not None:
                     # Classify battery
@@ -155,17 +165,18 @@ with tab1:
                     
                     col1, col2, col3 = st.columns(3)
                     
+                    # Display predicted SOH
                     with col1:
                         st.metric("Predicted SOH", f"{soh:.4f}")
-                    
+                    # Display SOH Status (Healthy/Unhealthy)
                     with col2:
                         st.metric("Status", f"{emoji} {status}")
-                    
+                    # Display predicted SOH as a percentage
                     with col3:
                         health_percent = soh * 100
                         st.metric("Health %", f"{health_percent:.1f}%")
                     
-                    # Status box
+                    # Status information
                     if status == "Healthy":
                         st.markdown(
                             f"""<div class='healthy'>
@@ -191,13 +202,13 @@ with tab1:
                         insights = get_battery_insights(soh, status, st.session_state.threshold)
                         st.info(insights)
                     
-                    # Display cell values table
-                    with st.expander("View Cell Values"):
-                        cell_df = pd.DataFrame({
-                            'Cell': list(cell_values.keys()),
-                            'Voltage': list(cell_values.values())
+                    # Display voltage measurements table
+                    with st.expander("View Voltage Samples"):
+                        sample_df = pd.DataFrame({
+                            'Measurement': list(voltage_measurements.keys()),
+                            'Voltage': list(voltage_measurements.values())
                         })
-                        st.dataframe(cell_df, width='stretch', hide_index=True)
+                        st.dataframe(sample_df, width='stretch', hide_index=True)
 
 # Tab 2: Chatbot
 with tab2:
@@ -205,7 +216,7 @@ with tab2:
     
     st.write("""
     Ask questions about battery health, maintenance, recycling, or general battery-related topics.
-    The chatbot is powered by Google Gemini AI.
+    The chatbot is powered by Google Gemini.
     """)
     
     # Display chat history
@@ -213,14 +224,14 @@ with tab2:
         with st.chat_message(msg["role"]):
             st.write(msg["content"])
     
-    # Chat input
-    user_input = st.chat_input("Ask a question about batteries...")
+    #Chat input
+    user_prompt = st.chat_input("Ask a question about batteries...")
     
-    if user_input:
+    if user_prompt:
         # Add user message to history
-        st.session_state.messages.append({"role": "user", "content": user_input})
+        st.session_state.messages.append({"role": "user", "content": user_prompt})
         with st.chat_message("user"):
-            st.write(user_input)
+            st.write(user_prompt)
         
         # Generate Gemini response
         try:
@@ -230,13 +241,15 @@ with tab2:
             and environmental impact. Provide clear, concise, and practical advice.
             Keep responses under 300 words."""
             
-            full_prompt = f"{system_prompt}\n\nUser question: {user_input}"
+            full_prompt = f"{system_prompt}\n\nUser question: {user_prompt}"
             
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=full_prompt
             )
             bot_reply = response.text
+
+        # Failed to generate response
         except Exception as e:
             bot_reply = f"❌ Error communicating with Gemini: {e}"
         
@@ -262,6 +275,7 @@ st.markdown("""
     Built with Streamlit, Scikit-learn, and Google Gemini API
     <br>
     Predicts battery health from PulseBat voltage measurements (U1-U21)
+    <br>    
     </p>
     </div>
 """, unsafe_allow_html=True)

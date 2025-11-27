@@ -20,6 +20,7 @@ def main():
     print("UNSORTED DATA WILL BE USED TO TRAIN MODEL.\n")
 
 def mergeSort2D(array):
+    
     # Merge sort 
     def mergeSort(array):
         if len(array) > 1: 
