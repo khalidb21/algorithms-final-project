@@ -11,7 +11,7 @@ if df is None:
     raise ValueError("Failed to train and save linear regression model")
 
 voltage_cols = [f'U{i}' for i in range(1, 22)]      # Create a list of columns U1-U21
-X = df[voltage_cols].to_numpy()                     # voltage values for each row
+X = df[voltage_cols]                                # voltage values for each row
 y = df['SOH']                                       # state of health value for each row
 
 # Train and save linear regression model as an object
