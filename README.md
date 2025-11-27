@@ -66,6 +66,40 @@ cd app
 streamlit run app.py
 ```
 
+## 📄 What You’ll See After Running the Program
+
+When you run `main.py`, the program prints each stage of the process in the console. The output usually follows this order:
+
+---
+### **1. Dataset Preprocessing**
+You will see messages confirming that the dataset was loaded correctly, along with:
+- The extracted SOH values for cells U1–U21  
+- Sorted versions of the values (depending on which sorting method is running)  
+- Any notes or updates printed during preprocessing  
+---
+### **2. Model Training**
+The console will show messages such as:
+- When training begins  
+- When the model finishes training  
+- Any details or logs printed by scikit-learn during the process  
+---
+### **3. Evaluation Metrics**
+After training, the program prints several metrics that show how the model performed:
+- *R² Score*  
+- *Mean Squared Error (MSE)*  
+- *Mean Absolute Error (MAE)* 
+- *Root Mean Squared Error (RMSE)*  
+These numbers give an idea of how close the predictions are to the actual SOH values.
+---
+### **4. Final SOH Prediction**
+Example output line: *Predicted SOH: 0.71*  
+This represents the model’s estimate of the battery pack’s health.
+---
+### **5. Battery Health Classification**
+Based on the required threshold rule (`0.6`): *Battery Status: Healthy* or *Battery Status Problem Detected*  
+
+---  
+
 ## 🗂️ Repository Structure
 algorithms-final-project/  
 │── main.py            &emsp;    *# Main script: preprocessing → sorting → regression → evaluation*  
