@@ -15,8 +15,9 @@ def main():
 
     # Run comparison of sorting strategies
     best_method = compare_sorting_methods(X, y)
-    print(f"\nBEST METHOD SELECTED: {best_method.upper()}")
-    print("This method will be used for the trained model.\n")
+    print(f"\nBEST METHOD SELECTED (Lowest MSE): {best_method.upper()}")
+    print("However, results are similar enough to consider sorting to have a neglible effect.\n")
+    print("UNSORTED DATA WILL BE USED TO TRAIN MODEL.\n")
 
 def mergeSort2D(array):
     # Merge sort 
