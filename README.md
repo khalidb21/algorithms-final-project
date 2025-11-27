@@ -66,7 +66,7 @@ cd app
 streamlit run app.py
 ```
 
-## 📄 What You’ll See After Running the Program
+## What You’ll See After Running the Program
 
 When you run `main.py`, the program prints each stage of the process in the console. The output usually follows this order:
 
@@ -102,7 +102,7 @@ Based on the required threshold rule (`0.6`): *Battery Status: Healthy* or *Batt
 
 ---  
 
-## 🗂️ Repository Structure
+## Repository Structure
 algorithms-final-project/  
 │── main.py            &emsp;    *# Main script: preprocessing → sorting → regression → evaluation*  
 │── sorting.py         &emsp;    *# Sorting functions (may include selection & merge sort)*  
