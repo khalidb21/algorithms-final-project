@@ -5,22 +5,16 @@ from preprocessing import mergeSort2D
 from config import *
 
 # Train and save model into a .pk1 file for chatbot use
-def main():
+# Load data
+df = load_pulsebat_data(DATASET_FILEPATH)
+if df is None:
+    raise ValueError("Failed to train and save linear regression model")
 
-    # Load data
-    df = load_pulsebat_data(DATASET_FILEPATH)
-    if df is None:
-        return
-    
-    voltage_cols = [f'U{i}' for i in range(1, 22)]      # Create a list of columns U1-U21
-    X = df[voltage_cols].to_numpy()                     # voltage values for each row
-    y = df['SOH']                                       # state of health value for each row
-    X_merge = mergeSort2D(X)                            # perform merge sort preprocessing
+voltage_cols = [f'U{i}' for i in range(1, 22)]      # Create a list of columns U1-U21
+X = df[voltage_cols].to_numpy()                     # voltage values for each row
+y = df['SOH']                                       # state of health value for each row
 
-    # Train and output saved model
-    model, _, _ = train_linear_regression(X_merge, y)
-    joblib.dump(model, MODEL_OUTPUT_PATH)
-    print(f"Trained model saved to {MODEL_OUTPUT_PATH}")
-
-if __name__ == "__main__":
-    main()
+# Train and output saved model
+model, _, _ = train_linear_regression(X, y)
+joblib.dump(model, MODEL_OUTPUT_PATH)
+print(f"Trained model saved to {MODEL_OUTPUT_PATH}")
