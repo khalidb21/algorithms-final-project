@@ -63,6 +63,11 @@ cd app
 streamlit run app.py
 ```
 
-
+## 🗂️ Repository Structure
+/algorithms-final-project  
+|-- PulseBat Dataset.csv   ← cell-level data (U1 … U21)  
+|-- main.py                ← main script: data prep, model training, evaluation, classification  
+|-- README.md              ← this documentation  
+|-- .gitignore  
 
 
