@@ -37,7 +37,9 @@ install python dependencies
 
 ### Step 3
 
-Make sure to get free gemini api key and create a .env file in the root that follows the .env.example
+Make sure to get Free Gemini API Key and create a *.env* file in the root that follows the *.env.example*   
+
+Go to <ins>Google AI Studio</ins> and signin to your Google account, then click *'Get API Key'* and then *'Create API Key'* for you prokect.  
 
 After downloading dependencies, program is ready to be executed.
 
