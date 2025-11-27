@@ -92,8 +92,10 @@ After training, the program prints several metrics that show how the model perfo
 These numbers give an idea of how close the predictions are to the actual SOH values.
 ---
 ### **4. Final SOH Prediction**
+
 Example output line: *Predicted SOH: 0.71*  
 This represents the model’s estimate of the battery pack’s health.
+
 ---
 ### **5. Battery Health Classification**
 Based on the required threshold rule (`0.6`): *Battery Status: Healthy* or *Battery Status Problem Detected*  
