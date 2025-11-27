@@ -233,7 +233,7 @@ with tab2:
             full_prompt = f"{system_prompt}\n\nUser question: {user_input}"
             
             response = client.models.generate_content(
-                model="gemini-2.0-flash",
+                model="gemini-2.5-flash",
                 contents=full_prompt
             )
             bot_reply = response.text
