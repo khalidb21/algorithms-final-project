@@ -8,13 +8,6 @@ If SOH < 0.6 → Unhealthy Battery
 
 If SOH ≥ 0.6 → Healthy Battery
 
-**Current Phase: Train & Evaluate Linear Model**
-- Reads PulseBat data
-- Trains Model
-- Evaluates linear regression model based on standard metrics
-- Additional sorting methods to compare data prepocessing effects on model
-- SOH Classification based user chosen threshold
-
 # How to setup and run code
 
 **in Git Bash**  
@@ -26,8 +19,12 @@ If SOH ≥ 0.6 → Healthy Battery
 
 ## Install dependencies
 
+### Step 1
+
 create virtual env
 `python -m venv .venv`
+
+### Step 2
 
 activate virtual env (windows)
 `.venv\Scripts\activate`
@@ -40,12 +37,26 @@ install python dependencies
 
 After downloading dependencies, program is ready to be executed.
 
-## Output Description:
+## Run program
 
-The program prints model training and evaluation results for predicting battery State of Health (SOH). 
+### Step 1
 
-It displays:
-- Model Evaluation Metrics — R², MSE, RMSE, and MAE for three models (Unsorted, MergeSorted, and SelectionSorted data).
-- Battery Classification Results — based on a user-defined SOH threshold, showing overall accuracy, classification statistics for healthy/unhealthy batteries, and a simplified confusion matrix.
+Run the training model 
+
+**from root folder:**
+
+```
+cd model
+python train_model.py
+```
+
+### Step 2
+
+**from root folder:**
+
+```
+cd app
+streamlit run app.py
+```
 
 
