@@ -35,6 +35,10 @@ activate virtual env (linux)
 install python dependencies
 `pip install -r requirements.txt`
 
+### Step 3
+
+Make sure to get free gemini api key and create a .env file in the root that follows the .env.example
+
 After downloading dependencies, program is ready to be executed.
 
 ## Run program
@@ -58,5 +62,7 @@ python train_model.py
 cd app
 streamlit run app.py
 ```
+
+
 
 
