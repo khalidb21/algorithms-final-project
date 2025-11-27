@@ -64,10 +64,11 @@ streamlit run app.py
 ```
 
 ## 🗂️ Repository Structure
-/algorithms-final-project  
-|-- PulseBat Dataset.csv   ← cell-level data (U1 … U21)  
-|-- main.py                ← main script: data prep, model training, evaluation, classification  
-|-- README.md              ← this documentation  
-|-- .gitignore  
-
+algorithms-final-project/
+│── main.py                # Main script: preprocessing → sorting → regression → evaluation
+│── sorting.py             # Sorting functions (may include selection & merge sort)
+│── regression.py          # Helper functions for regression
+│── PulseBat Dataset.csv   # PulseBat dataset used by the program
+│── README.md              # Documentation file
+│── .gitignore
 
