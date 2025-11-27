@@ -92,10 +92,10 @@ with st.sidebar:
     st.header("⚙️ Configuration")
     
     # Use slider to change threshold
-    # Limit the user to changing threshold between 0.5 and 1 (inclusive)
+    # Limit the user to changing threshold between 0 and 1 (inclusive)
     st.session_state.threshold = st.slider(
         "SOH Threshold for Classification",
-        min_value=0.5,
+        min_value=0.0,
         max_value=1.0,
         value=0.6,
         step=0.05,
@@ -131,7 +131,7 @@ with tab1:
         
         # User input for voltage measurements
         with col1:
-            st.subheader("Enter Voltage Samples for Timestamps U1-21")
+            st.subheader("Enter Voltage Samples for cells (U1 - U21)")
             st.write("**Format:** `3.85 3.87 3.84 ...` (comma or space-separated values)")
             
             # Text area for input with a sample provided
@@ -274,7 +274,7 @@ st.markdown("""
     <br>
     Built with Streamlit, Scikit-learn, and Google Gemini API
     <br>
-    Predicts battery health from PulseBat voltage measurements (U1-U21)
+    Predicts battery health from PulseBat voltage measurements (cells U1-U21)
     <br>    
     </p>
     </div>
