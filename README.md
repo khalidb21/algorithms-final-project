@@ -1,4 +1,4 @@
-# Battery Pack SOH Prediction
+# Battery Pack SOH Prediction & Chatbot Integration
 
 A machine learning application that predicts battery State of Health (SOH) using linear regression. This project combines predictive modeling with a conversational chatbot interface to provide battery health insights.
 
