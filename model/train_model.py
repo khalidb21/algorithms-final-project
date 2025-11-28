@@ -2,7 +2,6 @@ import joblib
 
 # Imports from other files
 from model_utils import train_linear_regression, load_pulsebat_data
-from preprocessing import mergeSort2D
 from config import *
 
 # Load PulseBat Voltage data
